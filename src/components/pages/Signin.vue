@@ -38,8 +38,8 @@
         </button>
       </div>
       <div class="link-group">
-        <a href="signup">アカウント新規作成</a>
-        <a href="forget">パスワードを忘れた場合はこちら</a>
+        <router-link to="/signup">アカウント新規作成</router-link>
+        <router-link to="/forget">パスワードを忘れた場合はこちら</router-link>
       </div>
     </div>
   </div>

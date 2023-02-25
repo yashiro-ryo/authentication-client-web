@@ -59,8 +59,8 @@
       </button>
     </div>
     <div class="link-group">
-      <a href="/signin">ログインはこちら</a>
-      <a href="/forget">パスワードを忘れた場合はこちら</a>
+      <router-link to="/signin">ログインはこちら</router-link>
+      <router-link to="/forget">パスワードを忘れた場合はこちら</router-link>
     </div>
   </div>
 </template>

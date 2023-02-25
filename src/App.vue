@@ -1,3 +1,3 @@
 <template>
-  hogehoge
+  <router-view />
 </template>

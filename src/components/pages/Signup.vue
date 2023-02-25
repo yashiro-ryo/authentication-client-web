@@ -6,16 +6,6 @@
     <div class="card">
       <form id="form">
         <div class="mb-3">
-          <label class="form-label">名前</label>
-          <input
-            type="text"
-            class="form-control"
-            id="form-name"
-            placeholder="名前"
-          />
-          <p class="error-text" id="name-error"></p>
-        </div>
-        <div class="mb-3">
           <label class="form-label">メールアドレス</label>
           <input
             type="email"
@@ -23,8 +13,8 @@
             id="form-email"
             aria-describedby="emailHelp"
             placeholder="メールアドレス"
+            v-model="email"
           />
-          <p class="error-text" id="email-error"></p>
         </div>
         <div class="mb-3">
           <label class="form-label">パスワード</label>
@@ -33,9 +23,8 @@
             class="form-control"
             id="form-pass"
             placeholder="パスワード"
+            v-model="pass"
           />
-          <div id="emailHelp" class="form-text">8文字以上の英数字</div>
-          <p class="error-text" id="pass-error"></p>
         </div>
         <div class="mb-3">
           <label class="form-label">パスワード確認</label>
@@ -44,16 +33,16 @@
             class="form-control"
             id="form-pass-confirm"
             placeholder="パスワード"
+            v-model="confirmPass"
           />
-          <p class="error-text" id="pass-confirm-error"></p>
         </div>
       </form>
-      <p id="err-msg"></p>
+      <p id="err-msg">{{ errorText }}</p>
       <button
         type="submit"
         class="btn btn-primary"
         id="submit-btn"
-        onclick="submit()"
+        @click="doSignup"
       >
         登録
       </button>
@@ -64,3 +53,55 @@
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent, ref } from "vue";
+import { auth } from "../../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
+export default defineComponent({
+  setup() {
+    const email = ref("");
+    const pass = ref("");
+    const confirmPass = ref("");
+    const errorText = ref("");
+
+    const validateForm = () => {
+      if (pass.value !== confirmPass.value) {
+        console.log("パスワードが一致しない");
+        return false;
+      }
+      return true;
+    };
+
+    const doSignup = () => {
+      if (!validateForm()) {
+        return;
+      }
+      createUserWithEmailAndPassword(auth, email.value, pass.value)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          // TODO redirect to /home
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          errorText.value =
+            "アカウント作成に失敗しました。再度お試しください。";
+          // ..
+        });
+    };
+
+    return {
+      email,
+      pass,
+      confirmPass,
+      errorText,
+      doSignup,
+    };
+  },
+});
+</script>

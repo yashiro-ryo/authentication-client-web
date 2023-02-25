@@ -14,6 +14,7 @@
               aria-describedby="emailHelp"
               placeholder="メールアドレス"
               id="form-email"
+              v-model="email"
             />
           </div>
           <div class="mb-3">
@@ -23,6 +24,7 @@
               class="form-control"
               placeholder="パスワード"
               id="form-pass"
+              v-model="pass"
             />
           </div>
           <div class="mb-3 form-check">
@@ -32,8 +34,8 @@
             >
           </div>
         </form>
-        <p id="err-msg"></p>
-        <button id="submit-btn" class="btn btn-primary" onClick="submit()">
+        <p id="err-msg">{{ errorText }}</p>
+        <button id="submit-btn" class="btn btn-primary" @click="doSignin">
           ログイン
         </button>
       </div>
@@ -44,3 +46,42 @@
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent, ref, watch } from "vue";
+import { auth } from "../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+export default defineComponent({
+  setup() {
+    const email = ref("");
+    const pass = ref("");
+    const errorText = ref("");
+
+    watch([email, pass], () => {
+      errorText.value = "";
+    });
+
+    const doSignin = () => {
+      signInWithEmailAndPassword(auth, email.value, pass.value)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          // TODO redirect to /home
+        })
+        .catch((_) => {
+          // signin failed
+          errorText.value = "ログインに失敗しました。";
+        });
+    };
+
+    return {
+      email,
+      pass,
+      errorText,
+      doSignin,
+    };
+  },
+});
+</script>

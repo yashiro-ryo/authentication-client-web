@@ -82,8 +82,8 @@ export default defineComponent({
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
           // TODO redirect to /home
+          window.location.href = "https://task-manage-app.com/home";
         })
         .catch((error) => {
           const errorCode = error.code;

@@ -3,11 +3,13 @@ import { createRouter, createWebHistory } from "vue-router";
 import Signin from "./components/pages/Signin.vue";
 import Signup from "./components/pages/Signup.vue";
 import Forget from "./components/pages/Forget.vue";
+import Signout from "./components/pages/Signout.vue";
 
 const routes = [
   { path: "/signin", name: "signin", component: Signin },
   { path: "/signup", name: "signup", component: Signup },
   { path: "/forget", name: "forget", component: Forget },
+  { path: "/signout", name: "signout", component: Signout },
 ];
 
 const router = createRouter({

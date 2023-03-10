@@ -10,6 +10,11 @@ const routes = [
   { path: "/signup", name: "signup", component: Signup },
   { path: "/forget", name: "forget", component: Forget },
   { path: "/signout", name: "signout", component: Signout },
+  {
+    path: "/",
+    component: { templte: "<p></p>" },
+    redirect: "/signin",
+  },
 ];
 
 const router = createRouter({

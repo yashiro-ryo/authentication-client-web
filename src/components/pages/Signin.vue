@@ -27,12 +27,6 @@
               v-model="pass"
             />
           </div>
-          <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" />
-            <label class="form-check-label" id="form-save-signin-info"
-              >ログイン情報を保存する</label
-            >
-          </div>
         </form>
         <p id="err-msg">{{ errorText }}</p>
         <button id="submit-btn" class="btn btn-primary" @click="doSignin">
